@@ -957,6 +957,7 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
     public SubmoduleUpdateCommand submoduleUpdate() {
         return new SubmoduleUpdateCommand() {
             boolean recursive                      = false;
+            boolean shallow = false;
             boolean remoteTracking                 = false;
             boolean parentCredentials              = false;
             String  ref                            = null;
@@ -965,6 +966,11 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
 
             public SubmoduleUpdateCommand recursive(boolean recursive) {
                 this.recursive = recursive;
+                return this;
+            }
+
+            public SubmoduleUpdateCommand shallow(boolean shallow) {
+                this.shallow = shallow;
                 return this;
             }
 
@@ -1006,6 +1012,9 @@ public class CliGitAPIImpl extends LegacyCompatibleGitAPIImpl {
                 args.add("submodule", "update");
                 if (recursive) {
                     args.add("--init", "--recursive");
+                }
+                if (shallow) {
+                    args.add("--depth=1");
                 }
                 if (remoteTracking && isAtLeastVersion(1,8,2,0)) {
                     args.add("--remote");

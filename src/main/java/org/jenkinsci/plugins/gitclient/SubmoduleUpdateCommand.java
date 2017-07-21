@@ -13,6 +13,8 @@ public interface SubmoduleUpdateCommand extends GitCommand {
      */
     SubmoduleUpdateCommand recursive(boolean recursive);
 
+    SubmoduleUpdateCommand shallow(boolean shallow);
+
     /**
      * If set true and if the git version supports it, update the
      * submodules to the tip of the branch rather than to a specific
